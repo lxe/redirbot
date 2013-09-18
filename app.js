@@ -12,9 +12,9 @@ app.get('/api', function(req, res) {
     uri : req.query.uri,
     followAllRedirects : true,
     headers : {
-      'Cache-Control' :'no-cache',
-      'Pragma' :'no-cache',
-      'User-Agent' :'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.65 Safari/537.36'
+      'Cache-Control' : 'no-cache',
+      'Pragma' : 'no-cache',
+      'User-Agent' : req.get('user-agent')
     }
   }, function(error, response, body) {
     if (error) 
