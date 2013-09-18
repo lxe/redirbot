@@ -2,7 +2,7 @@ var _ = require('lodash')
   , express = require('express')
   , request = require('request')
   , cheerio = require('cheerio')
-  , port    = 8888;
+  , port    = process.env.PORT || 8888;
 
 var app = module.exports = express();
 app.use(express.static(__dirname + '/public'));
