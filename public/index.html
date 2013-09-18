@@ -39,7 +39,7 @@ $('form').on('submit', function(evt) {
         + link  + '</a></li>');
     });
     links.forEach(function(link, i) {
-      if (/^(mailto|javascript)/.test(link)) return;
+      if (/^(mailto|javascript|#)/.test(link)) return;
       $('#l' + i).prepend('<img src="/loading.gif">');
 
       $.ajax('/api?redirects=true&uri=' 
