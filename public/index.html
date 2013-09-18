@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<style>
+body {
+  margin: 40px;
+  color: #333;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  font-size: 72%;
+  line-height: 1.7;
+}
+li {
+  margin-bottom: 20px;
+}
+a:last-child {
+  font-weight: bold;
+}
+input {
+  width: 60%;
+}
+</style>
+</head>
+<body>
+<form>
+  <input placeholder="http://example.com/">
+  <button>Submit</button>
+</form>
+<ol></ol>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script>
+$('form').on('submit', function(evt) {
+  $('ol').html('');
+  var url = $('input').val();
+  $.ajax('/api?uri=' + url)
+  .done(function(links) {
+    links.forEach(function(link, i) {
+      $('ol').append('<li id="l' + i + '"><a href="' 
+        + link + '">' 
+        + link  + '</a></li>');
+    });
+    links.forEach(function(link, i) {
+      if (/^(mailto|javascript)/.test(link)) return;
+      $('#l' + i).prepend('<img src="/loading.gif">');
+
+      $.ajax('/api?redirects=true&uri=' 
+        + link.replace(/^\/(?!\/)/, url.split('/').slice(0, 3).join('/') + '/'))
+      .done(function(redirs) {
+        redirs.forEach(function(redir) {
+          $('#l' + i).append('<br><a href="' 
+            + redir.redirectUri + '">' 
+            + redir.redirectUri + '</a>');
+        });
+
+        $('#l' + i + ' img').remove();
+      });
+    });
+  })
+  return false;
+})
+</script>
+
+</body>
+</html>
