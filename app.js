@@ -2,7 +2,6 @@ var _ = require('lodash')
   , express = require('express')
   , request = require('request')
   , cheerio = require('cheerio')
-  , async   = require('async')
   , port    = 8888;
 
 var app = module.exports = express();
